@@ -18,6 +18,7 @@ public class Badger extends Herbivore
     private static final double BREEDING_PROBABILITY = 0.08;
     // The maximum number of births.
     private static final int MAX_LITTER_SIZE = 4;
+     private static final int DISEASE_FATALITY=3;
     // A shared random number generator to control breeding.
     private static final Random rand = Randomizer.getRandom();
     // The rabbit's age.
@@ -97,5 +98,13 @@ public class Badger extends Herbivore
      */
     protected int getMaxAge(){
         return MAX_AGE;
+    }   /**
+     * Check whether or not this rabbit is to give birth at this step.
+     * New births will be made into free adjacent locations.
+     * @param newRabbits A list to return newly born rabbits.
+     */
+    protected int getDiseaseFatality(){
+        return DISEASE_FATALITY;
     }
+    
 }
