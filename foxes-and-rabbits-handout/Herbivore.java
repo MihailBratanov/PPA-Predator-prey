@@ -1,6 +1,6 @@
 import java.util.List;
 import java.util.Random;
-
+import java.util.Iterator;
 /**
  * A simple model of a rabbit.
  * Rabbits age, move, breed, and die.
@@ -71,6 +71,12 @@ public abstract class Herbivore extends Animal
      * @param newRabbits A list to return newly born rabbits.
      */
     abstract protected void giveBirth(List<Animal> newHerbivores);
+      /**
+     * Check whether or not this rabbit is to give birth at this step.
+     * New births will be made into free adjacent locations.
+     * @param newRabbits A list to return newly born rabbits.
+     */
+    abstract protected int getDiseaseFatality();
     /**
      * This is what the rabbit does most of the time - it runs 
      * around. Sometimes it will breed or die of old age.
@@ -81,7 +87,16 @@ public abstract class Herbivore extends Animal
         incrementAge();
         
         if(isAlive()) {
-            
+              if(getDisease()==true){
+                  spreadDisease();
+                   System.out.println("isdead");
+                  int fatalityLevel=rand.nextInt(getDiseaseFatality());
+                  if (fatalityLevel==3){
+                      
+                      setDead();
+                     
+                    }
+                }
             giveBirth(newHerbivores);     
             // Try to move into a free location.
             Location newLocation = getField().freeAdjacentLocation(getLocation());
@@ -106,6 +121,28 @@ public abstract class Herbivore extends Animal
            setDead();
         }
     }  
+              /**
+     * Check whether or not this rabbit is to give birth at this step.
+     * New births will be made into free adjacent locations.
+     * @param newRabbits A list to return newly born rabbits.
+     */
+    protected void spreadDisease(){
+        Field field = getField();
+        List<Location> adjacent = field.adjacentLocations(getLocation());
+        Iterator<Location> it = adjacent.iterator();
+        while(it.hasNext()) {
+            Location where = it.next();
+            Object animal = field.getObjectAt(where);
+            if(animal instanceof Snake){
+                Snake snake=(Snake) animal;
+                if (animal instanceof Snake && sickOrNot()==true){
+                    getDisease();
+                    
+                }
+                
+            }
+    }
+}
     /**
      * Generate a number representing the number of births,
      * if it can breed.

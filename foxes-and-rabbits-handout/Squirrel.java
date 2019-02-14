@@ -17,6 +17,7 @@ public class Squirrel extends Herbivore
     // The likelihood of a squirrel breeding.
     private static final double BREEDING_PROBABILITY = 0.08;
     // The maximum number of births.
+    private static final int DISEASE_FATALITY=3;
     private static final int MAX_LITTER_SIZE = 4;
     // A shared random number generator to control breeding.
     private static final Random rand = Randomizer.getRandom();
@@ -116,5 +117,13 @@ public class Squirrel extends Herbivore
      */
     protected int getMaxLitterSize(){
         return MAX_LITTER_SIZE;
+    }
+       /**
+     * Check whether or not this rabbit is to give birth at this step.
+     * New births will be made into free adjacent locations.
+     * @param newRabbits A list to return newly born rabbits.
+     */
+    protected int getDiseaseFatality(){
+        return DISEASE_FATALITY;
     }
 }

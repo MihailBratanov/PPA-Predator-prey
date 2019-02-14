@@ -236,7 +236,7 @@ public abstract class Predator extends Animal
     protected int breed()
     {
         int births = 0;
-        if(canBreed() && rand.nextDouble() <= getBreedingProbability()) {
+        if(canBreed()  && rand.nextDouble() <= getBreedingProbability()) {
             births = rand.nextInt(getMaxLitterSize()) + 1;
         }
         return births;

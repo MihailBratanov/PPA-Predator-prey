@@ -16,7 +16,7 @@ public abstract class Animal
     private Location location;
     private Random rand;
     private boolean isFemale;
-    
+    private boolean isSick;
     /**
      * Create a new animal at location in field.
      * 
@@ -29,6 +29,7 @@ public abstract class Animal
         this.field = field;
         rand=new Random();
         getGender();
+        getDisease();
         setLocation(location);
         
     }
@@ -48,6 +49,27 @@ public abstract class Animal
     {
         return isFemale=rand.nextBoolean();
         
+    }
+       /**
+     * Check whether the animal is alive or not.
+     * @return true if the animal is still alive.
+     */
+    protected boolean getDisease()
+    {
+        return isSick=rand.nextBoolean();
+        
+    }
+           /**
+     * Check whether the animal is alive or not.
+     * @return true if the animal is still alive.
+     */
+    protected boolean sickOrNot()
+    {
+        return isSick;
+        
+    }
+    protected boolean getFemaleOrMale(){
+      return isFemale;
     }
     /**
      * Check whether the animal is alive or not.

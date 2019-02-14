@@ -14,23 +14,25 @@ public class Wolf extends Predator
     // Characteristics shared by all foxes (class variables).
     
     // The age at which a fox can start to breed.
-    private static final int BREEDING_AGE = 22;
+    private static final int BREEDING_AGE =5;
     //A random number representing the gender. Even numbers are female and odd numbers are male.
     
     // The age to which a fox can live.
-    private static final int MAX_AGE = 50;
+    private static final int MAX_AGE = 80;
     // The likelihood of a fox breeding.
-    private static final double BREEDING_PROBABILITY = 0.12;
+    private static final double BREEDING_PROBABILITY = 0.50;
     // The maximum number of births.
-    private static final int MAX_LITTER_SIZE = 3;
+    private static final int MAX_LITTER_SIZE = 8;
     // The food value of a single rabbit. In effect, this is the
     // number of steps a fox can go before it has to eat again.
-    private static final int BADGER_FOOD_VALUE = 4;
-    private static final int HEDGEHOG_FOOD_VALUE = 3;
+    private static final int BADGER_FOOD_VALUE = 7;
+    private static final int HEDGEHOG_FOOD_VALUE = 8;
     private static final int SQUIRREL_FOOD_VALUE = 0;
+    //this is the amount of steps animals can make before they die from the infection.
+    private static final int DISEASE_FATALITY=3;
     // A shared random number generator to control breeding.
     private static final Random rand = Randomizer.getRandom();
-    boolean gender;
+    //boolean gender;
     // Individual characteristics (instance fields).
     // The fox's age.
     private int age;
@@ -38,6 +40,9 @@ public class Wolf extends Predator
     private int foodLevelBadger;
     private int foodLevelHedgehog;
     private int foodLevelSquirrel;
+    private boolean isFemale;
+    private boolean isSick;
+    private int timetodie;
     /**
      * Create a fox. A fox can be created as a new born (age zero
      * and not hungry) or with a random age and food level.
@@ -59,10 +64,11 @@ public class Wolf extends Predator
             foodLevelBadger = BADGER_FOOD_VALUE;
             foodLevelHedgehog = HEDGEHOG_FOOD_VALUE;
         }
-        gender=this.getGender();
+        getGender();
+        getDisease();
+        
     }
-  
-    /**
+   /**
      * Check whether or not this rabbit is to give birth at this step.
      * New births will be made into free adjacent locations.
      * @param newRabbits A list to return newly born rabbits.
@@ -150,6 +156,29 @@ public class Wolf extends Predator
     protected int getMaxLitterSize(){
         return MAX_LITTER_SIZE;
     }
+        /**
+     * Check whether or not this rabbit is to give birth at this step.
+     * New births will be made into free adjacent locations.
+     * @param newRabbits A list to return newly born rabbits.
+     */
+    protected void spreadDisease(){
+        Field field = getField();
+        List<Location> adjacent = field.adjacentLocations(getLocation());
+        Iterator<Location> it = adjacent.iterator();
+        while(it.hasNext()) {
+            Location where = it.next();
+            Object animal = field.getObjectAt(where);
+            if(animal instanceof Wolf){
+                Wolf wolf=(Wolf) animal;
+                if (animal instanceof Wolf && sickOrNot()==true){
+                    getDisease();
+                    
+                }
+                
+                
+            }
+    }
+}
     /**
      * This is what the fox does most of the time: it hunts for
      * rabbits. In the process, it might breed, die of hunger,
@@ -161,8 +190,20 @@ public class Wolf extends Predator
     {
         incrementAge();
         incrementHunger();
+      
         if(isAlive()) {
-            giveBirth(newWolves);            
+            
+              //disease will take effect here if isSick==true;
+              if(getDisease()==true){
+                  spreadDisease();
+                
+                  int fatalityLevel=rand.nextInt(DISEASE_FATALITY);
+                  if (fatalityLevel==3){
+                     
+                      setDead();
+                     
+                    }
+                }
             // Move towards a source of food if found.
             Location newLocation = findFood();
             Location newPartnerLocation=findPartner();
@@ -170,9 +211,16 @@ public class Wolf extends Predator
                 // No food found - try to move to a free location.
                 newLocation = getField().freeAdjacentLocation(getLocation());
             }
+                if(newLocation != null) { 
+                // No food found - try to move to a free location.
+                 setLocation(newLocation);
+            }
             // See if it was possible to move.
-            if(newLocation != null) {
-                setLocation(newLocation);
+            if(newPartnerLocation != null) {
+            
+                giveBirth(newWolves);
+                
+                
             }
             else {
                 // Overcrowding.
@@ -193,10 +241,14 @@ public class Wolf extends Predator
         while(it.hasNext()) {
             Location where = it.next();
             Object animal = field.getObjectAt(where);
-            if(animal instanceof Wolf && !gender){
-                canBreed();
+            if(animal instanceof Wolf ){
+                Wolf wolf=(Wolf) animal;
+                if(wolf.isAlive() && getFemaleOrMale()!=wolf.getFemaleOrMale()){
+                    
+               // canBreed();
                return where;
-    }
+            }
+            }
     
 }
 return null;
