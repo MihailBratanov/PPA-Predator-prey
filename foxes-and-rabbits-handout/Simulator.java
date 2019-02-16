@@ -37,7 +37,8 @@ public class Simulator
     private int step;
     // A graphical view of the simulation.
     private SimulatorView view;
-    
+    private Time time=new Time();
+    private Weather weather=new Weather();
     /**
      * Construct a simulation field with default size.
      */
@@ -121,10 +122,16 @@ public class Simulator
                
         // Add the newly born foxes and rabbits to the main lists.
         animals.addAll(newAnimals);
-
+        time.setTime(step);
+        weather.setWeather(step);
         view.showStatus(step, field);
     }
-        
+     /**
+     * Gets the current step
+     */
+    public int getStep(){
+        return step;
+    }
     /**
      * Reset the simulation to a starting position.
      */

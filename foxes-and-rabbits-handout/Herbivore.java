@@ -22,7 +22,7 @@ public abstract class Herbivore extends Animal
     private  Random rand = Randomizer.getRandom();
     // The rabbit's age.
     //private int age;
-
+    
     /**
      * Create a new rabbit. A rabbit may be created with age
      * zero (a new born) or with a random age.
@@ -84,12 +84,13 @@ public abstract class Herbivore extends Animal
      */
     public void act(List<Animal> newHerbivores)
     {
+        while(getTimeAnimal().checkTime().equals("day")){
         incrementAge();
         
         if(isAlive()) {
               if(getDisease()==true){
                   spreadDisease();
-                   System.out.println("isdead");
+                  
                   int fatalityLevel=rand.nextInt(getDiseaseFatality());
                   if (fatalityLevel==3){
                       
@@ -108,6 +109,7 @@ public abstract class Herbivore extends Animal
                 setDead();
             }
         }
+    }
     }
     /**
      * Increase the age.

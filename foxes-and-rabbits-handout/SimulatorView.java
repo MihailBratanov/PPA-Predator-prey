@@ -24,9 +24,12 @@ public class SimulatorView extends JFrame
 
     private final String STEP_PREFIX = "Step: ";
     private final String POPULATION_PREFIX = "Population: ";
-    private JLabel stepLabel, population, infoLabel;
+    private final String HOUR_PREFIX = "time: ";
+    private final String WEATHER_PREFIX="weather: ";
+    private JLabel stepLabel, population, infoLabel, timeLabel,weatherLabel;
     private FieldView fieldView;
-    
+    private Time time;
+    private Weather weather;
     // A map for storing colors for participants in the simulation
     private Map<Class, Color> colors;
     // A statistics object computing and storing simulation information
@@ -41,12 +44,14 @@ public class SimulatorView extends JFrame
     {
         stats = new FieldStats();
         colors = new LinkedHashMap<>();
-
-        setTitle("Fox and Rabbit Simulation");
+        time=new Time();
+        weather=new Weather();
+        setTitle("Predator/Pray Simulation");
         stepLabel = new JLabel(STEP_PREFIX, JLabel.CENTER);
         infoLabel = new JLabel("  ", JLabel.CENTER);
         population = new JLabel(POPULATION_PREFIX, JLabel.CENTER);
-        
+        timeLabel=new JLabel(HOUR_PREFIX,JLabel.CENTER);
+        weatherLabel=new JLabel(WEATHER_PREFIX,JLabel.CENTER);
         setLocation(100, 50);
         
         fieldView = new FieldView(height, width);
@@ -54,8 +59,10 @@ public class SimulatorView extends JFrame
         Container contents = getContentPane();
         
         JPanel infoPane = new JPanel(new BorderLayout());
+            infoPane.add(weatherLabel, BorderLayout.EAST);
             infoPane.add(stepLabel, BorderLayout.WEST);
             infoPane.add(infoLabel, BorderLayout.CENTER);
+            infoPane.add(timeLabel, BorderLayout.NORTH);
         contents.add(infoPane, BorderLayout.NORTH);
         contents.add(fieldView, BorderLayout.CENTER);
         contents.add(population, BorderLayout.SOUTH);
@@ -108,6 +115,8 @@ public class SimulatorView extends JFrame
         }
             
         stepLabel.setText(STEP_PREFIX + step);
+        timeLabel.setText(HOUR_PREFIX + time.determineTime(step));
+        weatherLabel.setText(WEATHER_PREFIX + weather.determineWeather(step));
         stats.reset();
         
         fieldView.preparePaint();

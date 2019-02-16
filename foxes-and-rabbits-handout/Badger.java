@@ -23,7 +23,7 @@ public class Badger extends Herbivore
     private static final Random rand = Randomizer.getRandom();
     // The rabbit's age.
     private int age;
-
+    
     /**
      * Create a new rabbit. A rabbit may be created with age
      * zero (a new born) or with a random age.
@@ -38,6 +38,28 @@ public class Badger extends Herbivore
         age = 0;
         if(randomAge) {
             age = rand.nextInt(MAX_AGE);
+        }
+       
+    }
+       /**
+     * This is what the rabbit does most of the time - it runs 
+     * around. Sometimes it will breed or die of old age.
+     * @param newRabbits A list to return newly born rabbits.
+     */
+    public void act(List<Animal> newBadgers)
+    {
+        incrementAge();
+        if(isAlive()) {
+            giveBirth(newBadgers);            
+            // Try to move into a free location.
+            Location newLocation = getField().freeAdjacentLocation(getLocation());
+            if(newLocation != null) {
+                setLocation(newLocation);
+            }
+            else {
+                // Overcrowding.
+                setDead();
+            }
         }
     }
     /**

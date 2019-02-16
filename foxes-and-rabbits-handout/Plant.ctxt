@@ -1,0 +1,22 @@
+#BlueJ class context
+comment0.target=Plant
+comment0.text=\n\ Write\ a\ description\ of\ class\ Plant\ here.\n\n\ @author\ (your\ name)\n\ @version\ (a\ version\ number\ or\ a\ date)\n
+comment1.params=field\ location
+comment1.target=Plant(Field,\ Location)
+comment1.text=\n\ Constructor\ for\ objects\ of\ class\ Plant\n
+comment2.params=
+comment2.target=boolean\ isEaten()
+comment2.text=\n\ Check\ whether\ the\ animal\ is\ alive\ or\ not.\n\ @return\ true\ if\ the\ animal\ is\ still\ alive.\n
+comment3.params=newLocation
+comment3.target=void\ setLocation(Location)
+comment3.text=\n\ Place\ the\ animal\ at\ the\ new\ location\ in\ the\ given\ field.\n\ @param\ newLocation\ The\ animal's\ new\ location.\n
+comment4.params=
+comment4.target=Location\ getLocation()
+comment4.text=\n\ Place\ the\ animal\ at\ the\ new\ location\ in\ the\ given\ field.\n\ @param\ newLocation\ The\ animal's\ new\ location.\n
+comment5.params=
+comment5.target=Field\ getField()
+comment5.text=\n\ Place\ the\ animal\ at\ the\ new\ location\ in\ the\ given\ field.\n\ @param\ newLocation\ The\ animal's\ new\ location.\n
+comment6.params=newPlants
+comment6.target=void\ reGrow(java.util.List)
+comment6.text=\n\ \n
+numComments=7

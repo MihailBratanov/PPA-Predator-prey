@@ -28,9 +28,9 @@ public abstract class Predator extends Animal
     private  int SQUIRREL_FOOD_VALUE;
     // A shared random number generator to control breeding.
     private  Random rand = Randomizer.getRandom();
-
     
     
+   
     // Individual characteristics (instance fields).
     // The fox's age.
     private int age;
@@ -128,6 +128,7 @@ public abstract class Predator extends Animal
      */
     public void act(List<Animal> newPredators)
     {
+       while(getTimeAnimal().checkTime().equals("night")){
         incrementAge();
         incrementHunger();
         if(isAlive()) {
@@ -148,6 +149,7 @@ public abstract class Predator extends Animal
             }
         }
     }
+}
 
     /**
      * Increase the age. This could result in the fox's death.

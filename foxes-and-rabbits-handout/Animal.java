@@ -17,6 +17,8 @@ public abstract class Animal
     private Random rand;
     private boolean isFemale;
     private boolean isSick;
+    private Time time=new Time();
+    private Weather weather=new Weather();
     /**
      * Create a new animal at location in field.
      * 
@@ -93,7 +95,22 @@ public abstract class Animal
             field = null;
         }
     }
-
+ /**
+     * Return the animal's location.
+     * @return The animal's location.
+     */
+    protected Weather getWeatherAnimal()
+    {
+        return weather;
+    }
+     /**
+     * Return the animal's location.
+     * @return The animal's location.
+     */
+    protected Time getTimeAnimal()
+    {
+        return time;
+    }
     /**
      * Return the animal's location.
      * @return The animal's location.
