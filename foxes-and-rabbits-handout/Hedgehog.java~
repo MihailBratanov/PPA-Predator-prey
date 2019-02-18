@@ -145,7 +145,7 @@ public class Hedgehog extends Herbivore
     
     /**
      * Return food level of a flower to a hedgehog
-     * @return food level of a flower to a hedgehog.
+     * @return food level of a flower to a badger.
      */
     protected int getFlowerFoodLevel(){
         return foodLevelFlower;

@@ -2,33 +2,38 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * A simple model of a rabbit.
- * Rabbits age, move, breed, and die.
+ * A simple model of a badger.
+ * Badgers age, move, breed, and die.
  * 
- * @author David J. Barnes and Michael Kölling
- * @version 2016.02.29 (2)
+ * @author David J. Barnes Michael Kölling Hana Mizukami and Mihail Bratanov
+ * @version 2017.02.18 (3)
  */
 public class Badger extends Herbivore
 {
-    // The age at which a rabbit can start to breed.
+    // The age at which a badger can start to breed.
     private static final int BREEDING_AGE = 5;
-    // The age to which a rabbit can live.
+    // The age to which a badger can live.
     private static final int MAX_AGE = 40;
-    // The likelihood of a rabbit breeding.
+    // The likelihood of a badger breeding.
     private static final double BREEDING_PROBABILITY = 0.08;
     // The maximum number of births.
     private static final int MAX_LITTER_SIZE = 4;
-     private static final int DISEASE_FATALITY=3;
+    //The likelihood of a badger being sick and dying
+    private static final int DISEASE_FATALITY = 3;
+    // The food value of a single flower. In effect, this is the
+    // number of steps a badger can go before it has to eat again.
+    private static final int FLOWER_FOOD_VALUE = 3;
+    // The badger's food level, which is increased by eating flowers.
+    private int foodLevelFlower;
     // A shared random number generator to control breeding.
     private static final Random rand = Randomizer.getRandom();
-    // The rabbit's age.
+    // The badger's age.
     private int age;
-    
     /**
-     * Create a new rabbit. A rabbit may be created with age
+     * Create a new badger. A badger may be created with age
      * zero (a new born) or with a random age.
      * 
-     * @param randomAge If true, the rabbit will have a random age.
+     * @param randomAge If true, the badger will have a random age.
      * @param field The field currently occupied.
      * @param location The location within the field.
      */
@@ -39,12 +44,12 @@ public class Badger extends Herbivore
         if(randomAge) {
             age = rand.nextInt(MAX_AGE);
         }
-       
     }
-       /**
-     * This is what the rabbit does most of the time - it runs 
+    
+    /**
+     * This is what the badger does most of the time - it runs 
      * around. Sometimes it will breed or die of old age.
-     * @param newRabbits A list to return newly born rabbits.
+     * @param newBadgers A list to return newly born badgers.
      */
     public void act(List<Animal> newBadgers)
     {
@@ -62,14 +67,15 @@ public class Badger extends Herbivore
             }
         }
     }
+    
     /**
      * Check whether or not this rabbit is to give birth at this step.
      * New births will be made into free adjacent locations.
-     * @param newRabbits A list to return newly born rabbits.
+     * @param newBadger A list to return newly born badgers.
      */
     protected void giveBirth(List<Animal> newBadgers)
     {
-        // New rabbits are born into adjacent locations.
+        // New badgers are born into adjacent locations.
         // Get a list of adjacent free locations.
         Field field = getField();
         List<Location> free = field.getFreeAdjacentLocations(getLocation());
@@ -81,52 +87,68 @@ public class Badger extends Herbivore
             newBadgers.add(young);
         }
     }
+    
     /**
-     * Check whether or not this rabbit is to give birth at this step.
-     * New births will be made into free adjacent locations.
-     * @param newRabbits A list to return newly born rabbits.
+     * Return breeding age of a badger
+     * @return breeding age of a badger.
      */
     protected int getBreedingAge(){
         return BREEDING_AGE;
     }
+    
     /**
-     * Check whether or not this rabbit is to give birth at this step.
-     * New births will be made into free adjacent locations.
-     * @param newRabbits A list to return newly born rabbits.
+     * Return breeding probability of a badger
+     * @return breeding probability of a badger.
      */
     protected double getBreedingProbability(){
         return BREEDING_PROBABILITY;
     }
+    
     /**
-     * Check whether or not this rabbit is to give birth at this step.
-     * New births will be made into free adjacent locations.
-     * @param newRabbits A list to return newly born rabbits.
+     * Return age of a badger
+     * @return age of a badger.
      */
     protected int getAge(){
         return age;
     }
+    
     /**
-     * Check whether or not this rabbit is to give birth at this step.
-     * New births will be made into free adjacent locations.
-     * @param newRabbits A list to return newly born rabbits.
+     * Return maximum litter size of a badger
+     * @return maximum litter size of a badger.
      */
     protected int getMaxLitterSize(){
         return MAX_LITTER_SIZE;
     }
+    
     /**
-     * Check whether or not this rabbit is to give birth at this step.
-     * New births will be made into free adjacent locations.
-     * @param newRabbits A list to return newly born rabbits.
+     * Return maximum age of a badger
+     * @return maximum age of a badger.
      */
     protected int getMaxAge(){
         return MAX_AGE;
-    }   /**
-     * Check whether or not this rabbit is to give birth at this step.
-     * New births will be made into free adjacent locations.
-     * @param newRabbits A list to return newly born rabbits.
+    }
+    
+    /**
+     * Return the fatality rate of a badger
+     * @return the fatality rate of a badger.
      */
     protected int getDiseaseFatality(){
         return DISEASE_FATALITY;
     }
     
+    /**
+     * Return food value of a flower to a badger
+     * @return food value of a flower to a badger.
+     */
+    protected int getFlowerFoodValue(){
+        return FLOWER_FOOD_VALUE;
+    }
+    
+    /**
+     * Return food level of a flower to a badger
+     * @return food level of a flower to a badger.
+     */
+    protected int getFlowerFoodLevel(){
+        return foodLevelFlower;
+    }
 }

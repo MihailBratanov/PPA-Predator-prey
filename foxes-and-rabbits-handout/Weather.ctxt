@@ -1,14 +1,16 @@
 #BlueJ class context
 comment0.target=Weather
-comment0.text=\n\ Write\ a\ description\ of\ class\ Weather\ here.\n\n\ @Hana\ Mizukami\ (Hana)\n\ @version\ (a\ version\ number\ or\ a\ date)\n
+comment0.text=\r\n\ Weather\ class\ stores\ the\ possible\ weathers\ for\ each\ time\ step.\r\n\r\n\ @Hana\ Mizukami\ (Hana)\r\n\ @version1\ 14/02/2019\ \r\n
 comment1.params=
 comment1.target=Weather()
-comment1.text=\n\ Constructor\ for\ objects\ of\ class\ Weather\n
+comment1.text=\r\n\ Constructor\ for\ objects\ of\ class\ Weather\r\n
 comment2.params=steps
 comment2.target=java.lang.String\ determineWeather(int)
-comment2.text=\n\ An\ example\ of\ a\ method\ -\ replace\ this\ comment\ with\ your\ own\n\n\ @param\ \ y\ \ a\ sample\ parameter\ for\ a\ method\n\ @return\ \ \ \ the\ sum\ of\ x\ and\ y\n
+comment2.text=\r\n\ An\ example\ of\ a\ method\ -\ replace\ this\ comment\ with\ your\ own\r\n\r\n\ @param\ \ timeToChange\ \ when\ the\ weather\ changes\r\n\ @param\ \ weather\ String\ values\ for\ the\ weather\r\n\ @return\ \ \ \ the\ weather\ description\r\n
 comment3.params=step
 comment3.target=void\ setWeather(int)
+comment3.text=\r\n\ Set\ stepCount\ as\ the\ number\ of\ weather\ changes\r\n\r\n\ @param\ \ step\ \ input\ integer\ of\ the\ number\ of\ steps\ \ \ \ \r\n
 comment4.params=
 comment4.target=java.lang.String\ checkWeather()
+comment4.text=\r\n\ Returns\ the\ current\ weather\r\n\r\n\ @return\ \ \ \ current\ weather\r\n
 numComments=5

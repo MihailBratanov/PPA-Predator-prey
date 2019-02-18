@@ -34,7 +34,7 @@ public class Snake extends Predator
     // Individual characteristics (instance fields).
     // The snake's age.
     private int age;
-    // The snake's food level, which is increased by eating herbivores.
+    // The snake's food level, which is increased by eating rabbits.
     private int foodLevelBadger;
     private int foodLevelSquirrel;
     private int foodLevelHedgehog;

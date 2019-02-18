@@ -69,7 +69,7 @@ public class Plant
     }
     
     /**
-     * Grow the plants after the herbivores eat the plants
+     * 
      */
     public void reGrow(List<Plant> newPlants){
         Field field = getField();

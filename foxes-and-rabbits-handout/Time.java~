@@ -46,6 +46,7 @@ public class Time
     /**
      * Returns the current time
      *
+     * @param  stepCount  integer for the number of steps
      * @return    day or night as time reference
      */
     public String checkTime(){

@@ -145,7 +145,7 @@ public class Squirrel extends Herbivore
     
     /**
      * Return food level of a flower to a squirrel
-     * @return food level of a flower to a squirrel.
+     * @return food level of a flower to a badger.
      */
     protected int getFlowerFoodLevel(){
         return foodLevelFlower;

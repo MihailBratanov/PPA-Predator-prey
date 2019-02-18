@@ -50,7 +50,6 @@ public class Weather
     {
         stepCount = step;   
     }
-    
     /**
      * Returns the current weather
      *

@@ -73,7 +73,7 @@ public abstract class Herbivore extends Animal
      * Return the food level of a herbivore for flower
      * @return the food level of a herbivore for flower
      */
-    abstract protected int getFlowerFoodLevel();
+    abstract protected int getBadgerFoodLevel();
     
     /**
      * This is what the herbivore does most of the time - it runs 

@@ -253,7 +253,7 @@ public class Wolf extends Predator
      */
     public void giveBirth(List<Animal> newWolves)
     {
-        // New wolves are born into adjacent locations.
+        // New foxes are born into adjacent locations.
         // Get a list of adjacent free locations.
         Field field = getField();
         List<Location> free = field.getFreeAdjacentLocations(getLocation());
