@@ -28,13 +28,14 @@ public class SimulatorView extends JFrame
     private final String WEATHER_PREFIX="weather: ";
     private JLabel stepLabel, population, infoLabel, timeLabel,weatherLabel;
     private FieldView fieldView;
+    private FieldView plantFieldView;
     private Time time;
     private Weather weather;
     // A map for storing colors for participants in the simulation
     private Map<Class, Color> colors;
     // A statistics object computing and storing simulation information
     private FieldStats stats;
-
+    private FieldStats plantStats;
     /**
      * Create a view of the given width and height.
      * @param height The simulation's height.
@@ -43,6 +44,7 @@ public class SimulatorView extends JFrame
     public SimulatorView(int height, int width)
     {
         stats = new FieldStats();
+        plantStats = new FieldStats();
         colors = new LinkedHashMap<>();
         time=new Time();
         weather=new Weather();
@@ -55,6 +57,7 @@ public class SimulatorView extends JFrame
         setLocation(100, 50);
         
         fieldView = new FieldView(height, width);
+        plantFieldView = new FieldView(height, width);
 
         Container contents = getContentPane();
         
@@ -108,7 +111,7 @@ public class SimulatorView extends JFrame
      * @param step Which iteration step it is.
      * @param field The field whose status is to be displayed.
      */
-    public void showStatus(int step, Field field)
+    public void showStatus(int step, Field field, Field plantField)
     {
         if(!isVisible()) {
             setVisible(true);
@@ -120,23 +123,33 @@ public class SimulatorView extends JFrame
         stats.reset();
         
         fieldView.preparePaint();
+        plantFieldView.preparePaint();
 
         for(int row = 0; row < field.getDepth(); row++) {
             for(int col = 0; col < field.getWidth(); col++) {
                 Object animal = field.getObjectAt(row, col);
+                Object plant = plantField.getObjectAt(row, col);
                 if(animal != null) {
                     stats.incrementCount(animal.getClass());
                     fieldView.drawMark(col, row, getColor(animal.getClass()));
                 }
-                else {
+                else if (plant != null){
+                    plantStats.incrementCount(plant.getClass());
+                    plantFieldView.drawMark(col, row, getColor(plant.getClass()));
+                }
+                 else   
+                {
                     fieldView.drawMark(col, row, EMPTY_COLOR);
                 }
             }
         }
+        
         stats.countFinished();
-
+        plantStats.countFinished();
         population.setText(POPULATION_PREFIX + stats.getPopulationDetails(field));
+       
         fieldView.repaint();
+        plantFieldView.repaint();
     }
 
     /**

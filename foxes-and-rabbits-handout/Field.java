@@ -20,6 +20,7 @@ public class Field
     private int depth, width;
     // Storage for the animals.
     private Object[][] field;
+    private Object[][] plantField;
 
     /**
      * Represent a field of the given dimensions.
@@ -31,6 +32,7 @@ public class Field
         this.depth = depth;
         this.width = width;
         field = new Object[depth][width];
+        plantField=new Object[depth][width];
     }
     
     /**
@@ -41,6 +43,7 @@ public class Field
         for(int row = 0; row < depth; row++) {
             for(int col = 0; col < width; col++) {
                 field[row][col] = null;
+                plantField[row][col] = null;
             }
         }
     }
@@ -52,6 +55,7 @@ public class Field
     public void clear(Location location)
     {
         field[location.getRow()][location.getCol()] = null;
+        plantField[location.getRow()][location.getCol()]=null;
     }
     
     /**
@@ -65,6 +69,20 @@ public class Field
     public void place(Object animal, int row, int col)
     {
         place(animal, new Location(row, col));
+      
+    }
+     /**
+     * Place an animal at the given location.
+     * If there is already an animal at the location it will
+     * be lost.
+     * @param animal The animal to be placed.
+     * @param row Row coordinate of the location.
+     * @param col Column coordinate of the location.
+     */
+    public void placePlant(Object plant, int row, int col)
+    {
+        placePlant(plant, new Location(row, col));
+      
     }
     
     /**
@@ -77,8 +95,12 @@ public class Field
     public void place(Object animal, Location location)
     {
         field[location.getRow()][location.getCol()] = animal;
+        
     }
-    
+    public void placePlant(Object plant, Location location)
+    {
+        plantField[location.getRow()][location.getCol()] = plant;
+    }
     /**
      * Return the animal at the given location, if any.
      * @param location Where in the field.
@@ -87,6 +109,15 @@ public class Field
     public Object getObjectAt(Location location)
     {
         return getObjectAt(location.getRow(), location.getCol());
+    }
+        /**
+     * Return the animal at the given location, if any.
+     * @param location Where in the field.
+     * @return The animal at the given location, or null if there is none.
+     */
+    public Object getPlantAt(Location location)
+    {
+        return getPlantAt(location.getRow(), location.getCol());
     }
     
     /**
@@ -98,6 +129,18 @@ public class Field
     public Object getObjectAt(int row, int col)
     {
         return field[row][col];
+        
+    }
+      /**
+     * Return the animal at the given location, if any.
+     * @param row The desired row.
+     * @param col The desired column.
+     * @return The animal at the given location, or null if there is none.
+     */
+    public Object getPlantAt(int row, int col)
+    {
+        return plantField[row][col];
+        
     }
     
     /**
@@ -124,7 +167,7 @@ public class Field
         List<Location> free = new LinkedList<>();
         List<Location> adjacent = adjacentLocations(location);
         for(Location next : adjacent) {
-            if(getObjectAt(next) == null) {
+            if(getObjectAt(next) == null || getPlantAt(next)==null ) {
                 free.add(next);
             }
         }

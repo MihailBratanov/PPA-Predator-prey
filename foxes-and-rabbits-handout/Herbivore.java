@@ -94,12 +94,15 @@ public abstract class Herbivore extends Animal
                         setDead();
                     }
                 }
-                giveBirth(newHerbivores);     
-                // Try to move into a free location.
-                Location newLocation = getField().freeAdjacentLocation(getLocation());
+                giveBirth(newHerbivores);
+                Location newLocation = findFood();
+               if(newLocation == null) { 
+                   // No food found - try to move to a free location.
+                   newLocation = getField().freeAdjacentLocation(getLocation());
+                }
                 if(newLocation != null) {
                     setLocation(newLocation);
-                }
+               }
                 else {
                     // Overcrowding.
                     setDead();
@@ -108,6 +111,20 @@ public abstract class Herbivore extends Animal
         }
     }
     
+    /**
+     * Make this predator more hungry. This could result in the predator's death.
+     */
+    protected void incrementHunger()
+    {
+        int f = getFlowerFoodLevel();
+        
+        f--;
+       
+      
+        if(f<=0 ){
+            setDead();
+        }
+    }
     /**
      * Increase the age.
      * This could result in the rabbit's death.
@@ -131,9 +148,9 @@ public abstract class Herbivore extends Animal
         while(it.hasNext()) {
             Location where = it.next();
             Object animal = field.getObjectAt(where);
-            if(animal instanceof Snake){
-                Snake snake=(Snake) animal;
-                if (animal instanceof Snake && sickOrNot()==true){
+            if(animal instanceof Animal){
+                Animal animal1=(Animal) animal;
+                if (animal1 instanceof Animal && sickOrNot()==true){
                     getDisease();
                 }
             }
@@ -162,13 +179,13 @@ public abstract class Herbivore extends Animal
     {
         return getAge() >= getBreedingAge();
     }
-}
+
     /**
      * Look for plants adjacent to the current location.
      * 
      * @return Where food was found, or null if it wasn't.
      */
-    /**protected Location findFood()
+    protected Location findFood()
     {
         Field field = getField();
         List<Location> adjacent = field.adjacentLocations(getLocation());
@@ -178,15 +195,20 @@ public abstract class Herbivore extends Animal
             Object plant = field.getObjectAt(where);
             if(plant instanceof Flower) {
                 Flower flower = (Flower) plant;
-                if(!flower.isEasten()) { 
+                if(!flower.isEaten()) { 
                     flower.setDead();
                     int b = getFlowerFoodValue();
                     return where;
                 }
-            } //if the adjacent animal was a flower, flower dies and the food value is set as the location is allocated
+            }
+        }//if the adjacent animal was a flower, flower dies and the food value is set as the location is allocated
             return null; //no location
-        } 
-    */
+        }
     
+    
+}
+
+
+
     
 

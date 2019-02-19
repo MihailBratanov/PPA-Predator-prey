@@ -6,7 +6,7 @@ import java.util.List;
  * @author Hana Mizukami and Mihail Bratanov
  * @version 2019.02.17
  */
-public class Plant
+public abstract class Plant
 {
     //properties of a plant
     private  Random rand = Randomizer.getRandom();
@@ -16,13 +16,14 @@ public class Plant
     private Location plantLocation;
     // whether or not the plan is eaten by herbivores
     private boolean eaten;
+    private Weather weather=new Weather();
     /**
      * Constructor for objects of class Plant
      */
-    private Plant(Field field, Location location)
+    public Plant(Field field, Location plantLocation)
     {
-        this.plantField = field;
-        setLocation(location);
+       plantField = field;
+        setLocation(plantLocation);
         rand = new Random();
         eaten = false; //not eaten 
     }
@@ -31,11 +32,24 @@ public class Plant
      * Check whether the plant is eaten or not.
      * @return true if the plant is eaten.
      */
-    public boolean isEaten()
+    protected boolean isEaten()
     {
         return eaten;
     }
     
+      /**
+     * Indicate that the plant is no longer alive.
+     * It is removed from the field.
+     */
+    protected void setDead()
+    {
+        eaten = true;
+        if(plantLocation != null) {
+            plantField.clear(plantLocation);
+            plantLocation = null;
+            plantField = null;
+        }
+    }
     /**
      * Place the plant at the new location in the given field.
      * @param newLocation The plant's new location.
@@ -54,7 +68,8 @@ public class Plant
      * 
      * @return location of the plant
      */
-    public Location getLocation()
+    
+    protected Location getLocation()
     {
         return plantLocation;
     }
@@ -63,7 +78,7 @@ public class Plant
      * Return the field where the plant is at
      * @return the field of the plant.
      */
-    public Field getField()
+    protected Field getField()
     {
         return plantField;
     }
@@ -71,13 +86,14 @@ public class Plant
     /**
      * Grow the plants after the herbivores eat the plants
      */
-    public void reGrow(List<Plant> newPlants){
-        Field field = getField();
-        List<Location> free = field.getFreeAdjacentLocations(getLocation());
-        if(free.size() > 0) {
-            Location loc = free.remove(0);
-            Plant newPlant = new Plant(field, loc);
-            newPlants.add(newPlant);
-        }
+    abstract void reGrow(List<Plant> newPlants);
+     /**
+     * 
+     */
+    protected boolean canGrow(){
+        if(weather.checkWeather().equals("rainy") && isEaten()==true){
+            return true;
     }
+    return false;
+}
 }
