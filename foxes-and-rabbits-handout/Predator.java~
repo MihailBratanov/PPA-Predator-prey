@@ -23,21 +23,7 @@ public abstract class Predator extends Animal
     public Predator(Field field, Location location)
     {
         super(field, location);
-        int b = getBadgerFoodLevel();
-        int s = getSquirrelFoodLevel();
-        int h = getHedgehogFoodLevel();
     }
-    /**
-     * Return the breeding probability of a predator
-     * @return the breeding probability of a predator
-     */
-    abstract protected double getBreedingProbability();
-    
-    /**
-     * Return the maximum litter size of a predator
-     * @return the maximum litter size of a predator
-     */
-    abstract protected int getMaxLitterSize();
     
     /**
      * Return the age of a predator
@@ -52,10 +38,17 @@ public abstract class Predator extends Animal
     abstract protected int getMaxAge();
     
     /**
-     * Return the breeding age of a predator
-     * @return the breeding age of a predator
+     * Increase the age. This could result in the predator's death.
      */
-    abstract protected int getBreedingAge();
+    protected void incrementAge()
+    {
+        int age= getAge();
+        age++;
+      
+        if(age > getMaxAge()) {
+            setDead();
+        }
+    }
     
     /**
      * Return the food value of a predator for badger
@@ -74,6 +67,24 @@ public abstract class Predator extends Animal
      * @return the food value of a predator for hedgehog
      */
     abstract protected int getHedgehogFoodValue();
+    
+    /**
+     * Return the breeding probability of a predator
+     * @return the breeding probability of a predator
+     */
+    abstract protected double getBreedingProbability();
+    
+    /**
+     * Return the maximum litter size of a predator
+     * @return the maximum litter size of a predator
+     */
+    abstract protected int getMaxLitterSize();
+    
+    /**
+     * Return the breeding age of a predator
+     * @return the breeding age of a predator
+     */
+    abstract protected int getBreedingAge();
     
     /**
      * Return the food level of a predator for badger
@@ -126,73 +137,18 @@ public abstract class Predator extends Animal
     }
 
     /**
-     * Increase the age. This could result in the predator's death.
-     */
-    protected void incrementAge()
-    {
-        int age= getAge();
-        age++;
-      
-        if(age > getMaxAge()) {
-            setDead();
-        }
-    }
-    
-    /**
-     * Look for herbivores adjacent to the current location.
-     * 
-     * @return Where food was found, or null if it wasn't.
-     */
-    protected Location findFood()
-    {
-        Field field = getField();
-        List<Location> adjacent = field.adjacentLocations(getLocation());
-        Iterator<Location> it = adjacent.iterator();
-        while(it.hasNext()) {
-            Location where = it.next();
-            Object animal = field.getObjectAt(where);
-            if(animal instanceof Badger) {
-                Badger badger = (Badger) animal;
-                if(badger.isAlive()) { 
-                    badger.setDead();
-                    int b = getBadgerFoodValue();
-                    return where;
-                }
-            } //if the adjacent animal was a badger, badger dies and the food value is set as the location is allocated
-            else 
-             if(animal instanceof Squirrel) {
-                Squirrel squirrel = (Squirrel) animal;
-                if(squirrel.isAlive()) { 
-                    squirrel.setDead();
-                    int s = getSquirrelFoodValue();
-                    return where;
-                }
-            } //if the adjacent animal was a squirrel, squirrel dies and the food value is set as the location is allocated
-            else if (animal instanceof Hedgehog) {
-                Hedgehog hedgehog = (Hedgehog) animal;
-                if(hedgehog.isAlive()) { 
-                    hedgehog.setDead();
-                    int h = getHedgehogFoodValue();
-                    return where;
-                }
-            } //if the adjacent animal was a hedgehog, hedgehog dies and the food value is set as the location is allocated
-        }
-        return null; //no location
-    }
-    
-    /**
      * Make this predator more hungry. This could result in the predator's death.
      */
     protected void incrementHunger()
     {
-        int b = getBadgerFoodLevel();
-        int s = getSquirrelFoodLevel();
-        int h = getHedgehogFoodLevel();
-        b--;
-        s--;
-        h--;
+        int predatorBadgerFL = getBadgerFoodLevel();
+        int predatorSquirrelFL = getSquirrelFoodLevel();
+        int predatorHedgehogFL = getHedgehogFoodLevel();
+        predatorBadgerFL--;
+        predatorSquirrelFL--;
+        predatorHedgehogFL--;
       
-        if((b <= 0 && s<=0)||(b <= 0 && h<=0)||(h <= 0 && s<=0) ){
+        if((predatorBadgerFL <= 0 && predatorSquirrelFL<=0)||(predatorBadgerFL <= 0 && predatorHedgehogFL<=0)||(predatorHedgehogFL <= 0 && predatorSquirrelFL<=0) ){
             setDead();
         }
     }
@@ -225,5 +181,4 @@ public abstract class Predator extends Animal
     {
         return getAge() >= getBreedingAge();
     }
-    
 }

@@ -1,5 +1,5 @@
-import java.util.Random;
 import java.util.List;
+import java.util.Random;
 /**
  * Plant class takes into acount of what plants do as associated with herbivores.
  *
@@ -10,19 +10,20 @@ public abstract class Plant
 {
     //properties of a plant
     private  Random rand = Randomizer.getRandom();
+    // whether or not the plan is eaten by herbivores
+    private boolean eaten;
     //allocate a field
     private Field plantField;
     //allocate plant location
     private Location plantLocation;
-    // whether or not the plan is eaten by herbivores
-    private boolean eaten;
+    //relation to a weather
     private Weather weather=new Weather();
     /**
      * Constructor for objects of class Plant
      */
     public Plant(Field field, Location plantLocation)
     {
-       plantField = field;
+        plantField = field;
         setLocation(plantLocation);
         rand = new Random();
         eaten = false; //not eaten 
@@ -37,19 +38,16 @@ public abstract class Plant
         return eaten;
     }
     
-      /**
-     * Indicate that the plant is no longer alive.
-     * It is removed from the field.
+    /**
+     * 
      */
-    protected void setDead()
-    {
-        eaten = true;
-        if(plantLocation != null) {
-            plantField.clear(plantLocation);
-            plantLocation = null;
-            plantField = null;
+    protected boolean canGrow(){
+        if(weather.checkWeather().equals("rainy") && isEaten()==true){
+            return true;
         }
+        return false;
     }
+    
     /**
      * Place the plant at the new location in the given field.
      * @param newLocation The plant's new location.
@@ -64,15 +62,23 @@ public abstract class Plant
     }
     
     /**
-     * Return the location plant is planted
-     * 
-     * @return location of the plant
+     * Indicate that the plant is no longer alive.
+     * It is removed from the field.
      */
-    
-    protected Location getLocation()
+    protected void setDead()
     {
-        return plantLocation;
+        eaten = true;
+        if(plantLocation != null) {
+            plantField.clear(plantLocation);
+            plantLocation = null;
+            plantField = null;
+        }
     }
+    
+    /**
+     * Grow the plants after the herbivores eat the plants
+     */
+    abstract void reGrow(List<Plant> newPlants);
     
     /**
      * Return the field where the plant is at
@@ -84,16 +90,13 @@ public abstract class Plant
     }
     
     /**
-     * Grow the plants after the herbivores eat the plants
-     */
-    abstract void reGrow(List<Plant> newPlants);
-     /**
+     * Return the location plant is planted
      * 
+     * @return location of the plant
      */
-    protected boolean canGrow(){
-        if(weather.checkWeather().equals("rainy") && isEaten()==true){
-            return true;
+    
+    protected Location getLocation()
+    {
+        return plantLocation;
     }
-    return false;
-}
 }

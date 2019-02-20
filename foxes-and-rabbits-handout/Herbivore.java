@@ -10,6 +10,7 @@ import java.util.Iterator;
  */
 public abstract class Herbivore extends Animal
 {
+    // A shared random number generator to control breeding.
     private  Random rand = Randomizer.getRandom();
     /**
      * Create a new herbivore. 
@@ -21,17 +22,6 @@ public abstract class Herbivore extends Animal
     {
         super(field, location);
     }
-    /**
-     * Return the breeding probability of a herbivore
-     * @return the breeding probability of a herbivore.
-     */
-    abstract protected double getBreedingProbability();
-    
-    /**
-     * Return the maximum litter size of a herbivore
-     * @return the maximum litter size of a herbivore.
-     */
-    abstract protected int getMaxLitterSize();
     
     /**
      * Return the age of a herbivore
@@ -46,10 +36,110 @@ public abstract class Herbivore extends Animal
     abstract protected int getMaxAge();
     
     /**
+     * Increase the age.
+     * This could result in the rabbit's death.
+     */
+    protected void incrementAge()
+    {
+        int age = getAge();
+        age++;
+        if(age > getMaxAge()) {
+           setDead();
+        }
+    }
+    
+    /**
+     * Return the food value of a herbivore for flower
+     * @return the food value of a herbivore for flower
+     */
+    abstract protected int getFlowerFoodValue();
+    
+    /**
+     * Look for plants adjacent to the current location.
+     * 
+     * @return Where food was found, or null if it wasn't.
+     */
+    protected Location findFood()
+    {
+        Field field = getField();
+        List<Location> adjacent = field.adjacentLocations(getLocation());
+        Iterator<Location> it = adjacent.iterator();
+        while(it.hasNext()) {
+            Location where = it.next();
+            Object plant = field.getObjectAt(where);
+            if(plant instanceof Flower) {
+                Flower flower = (Flower) plant;
+                if(!flower.isEaten()) { 
+                    flower.setDead();
+                    int b = getFlowerFoodValue();
+                    return where;
+                }
+            }
+        }//if the adjacent animal was a flower, flower dies and the food value is set as the location is allocated
+            return null; //no location
+        }
+    
+    /**
+     * Return the food level of a herbivore for flower
+     * @return the food level of a herbivore for flower
+     */
+    abstract protected int getFlowerFoodLevel();
+    
+    /**
+     * Make this predator more hungry. This could result in the predator's death.
+     */
+    protected void incrementHunger()
+    {
+        int f = getFlowerFoodLevel();
+        
+        f--;
+       
+      
+        if(f<=0 ){
+            setDead();
+        }
+    }
+    
+    /**
+     * Return the breeding probability of a herbivore
+     * @return the breeding probability of a herbivore.
+     */
+    abstract protected double getBreedingProbability();
+    
+    /**
+     * Return the maximum litter size of a herbivore
+     * @return the maximum litter size of a herbivore.
+     */
+    abstract protected int getMaxLitterSize();
+    
+    /**
      * Return the breeding age of a herbivore
      * @return the breeding age of a herbivore.
      */
     abstract protected int getBreedingAge();
+    
+    /**
+     * A herbivore can breed if it has reached the breeding age.
+     * @return true if the herbivore can breed, false otherwise.
+     */
+    protected boolean canBreed()
+    {
+        return getAge() >= getBreedingAge();
+    }
+
+    /**
+     * Generate a number representing the number of births,
+     * if it can breed.
+     * @return The number of births (may be zero).
+     */
+    protected int breed()
+    {
+        int births = 0;
+        if(canBreed() && rand.nextDouble() <= getBreedingProbability()) {
+            births = rand.nextInt(getMaxLitterSize()) + 1;
+        }
+        return births;
+    }
     
     /**
      * Create a list of herbivores
@@ -64,16 +154,23 @@ public abstract class Herbivore extends Animal
     abstract protected int getDiseaseFatality();
     
     /**
-     * Return the food value of a herbivore for flower
-     * @return the food value of a herbivore for flower
+     * Spread sickness among herbivores
      */
-    abstract protected int getFlowerFoodValue();
-    
-    /**
-     * Return the food level of a herbivore for flower
-     * @return the food level of a herbivore for flower
-     */
-    abstract protected int getFlowerFoodLevel();
+    protected void spreadDisease(){
+        Field field = getField();
+        List<Location> adjacent = field.adjacentLocations(getLocation());
+        Iterator<Location> it = adjacent.iterator();
+        while(it.hasNext()) {
+            Location where = it.next();
+            Object animal = field.getObjectAt(where);
+            if(animal instanceof Animal){
+                Animal animal1=(Animal) animal;
+                if (animal1 instanceof Animal && sickOrNot()==true){
+                    getDisease();
+                }
+            }
+        }
+    }
     
     /**
      * This is what the herbivore does most of the time - it runs 
@@ -110,102 +207,6 @@ public abstract class Herbivore extends Animal
             }
         }
     }
-    
-    /**
-     * Make this predator more hungry. This could result in the predator's death.
-     */
-    protected void incrementHunger()
-    {
-        int f = getFlowerFoodLevel();
-        
-        f--;
-       
-      
-        if(f<=0 ){
-            setDead();
-        }
-    }
-    /**
-     * Increase the age.
-     * This could result in the rabbit's death.
-     */
-    protected void incrementAge()
-    {
-        int age = getAge();
-        age++;
-        if(age > getMaxAge()) {
-           setDead();
-        }
-    }
-    
-    /**
-     * Spread sickness among herbivores
-     */
-    protected void spreadDisease(){
-        Field field = getField();
-        List<Location> adjacent = field.adjacentLocations(getLocation());
-        Iterator<Location> it = adjacent.iterator();
-        while(it.hasNext()) {
-            Location where = it.next();
-            Object animal = field.getObjectAt(where);
-            if(animal instanceof Animal){
-                Animal animal1=(Animal) animal;
-                if (animal1 instanceof Animal && sickOrNot()==true){
-                    getDisease();
-                }
-            }
-        }
-    }
-    
-    /**
-     * Generate a number representing the number of births,
-     * if it can breed.
-     * @return The number of births (may be zero).
-     */
-    protected int breed()
-    {
-        int births = 0;
-        if(canBreed() && rand.nextDouble() <= getBreedingProbability()) {
-            births = rand.nextInt(getMaxLitterSize()) + 1;
-        }
-        return births;
-    }
-    
-    /**
-     * A herbivore can breed if it has reached the breeding age.
-     * @return true if the herbivore can breed, false otherwise.
-     */
-    protected boolean canBreed()
-    {
-        return getAge() >= getBreedingAge();
-    }
-
-    /**
-     * Look for plants adjacent to the current location.
-     * 
-     * @return Where food was found, or null if it wasn't.
-     */
-    protected Location findFood()
-    {
-        Field field = getField();
-        List<Location> adjacent = field.adjacentLocations(getLocation());
-        Iterator<Location> it = adjacent.iterator();
-        while(it.hasNext()) {
-            Location where = it.next();
-            Object plant = field.getObjectAt(where);
-            if(plant instanceof Flower) {
-                Flower flower = (Flower) plant;
-                if(!flower.isEaten()) { 
-                    flower.setDead();
-                    int b = getFlowerFoodValue();
-                    return where;
-                }
-            }
-        }//if the adjacent animal was a flower, flower dies and the food value is set as the location is allocated
-            return null; //no location
-        }
-    
-    
 }
 
 

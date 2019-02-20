@@ -19,7 +19,6 @@ public class Flower extends Plant
         // initialise instance variables
         isEaten=isEaten();
     }
-    
     /**
      * Grow flowers
      */

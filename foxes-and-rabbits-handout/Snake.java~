@@ -12,15 +12,11 @@ import java.util.Random;
 public class Snake extends Predator
 {
     // Characteristics shared by all snakes (class variables).
-  
-    // The age at which a snake can start to breed.
-    private static final int BREEDING_AGE = 3;
+    // A shared random number generator to control breeding.
+    private static final Random rand = Randomizer.getRandom();
+    
     // The age to which a snake can live.
     private static final int MAX_AGE = 120;
-    // The likelihood of a snake breeding.
-    private static final double BREEDING_PROBABILITY = 0.80;
-    // The maximum number of births.
-    private static final int MAX_LITTER_SIZE = 8;
     // The food value of a single badger. In effect, this is the
     // number of steps a snake can go before it has to eat again.
     private static final int BADGER_FOOD_VALUE = 3;
@@ -28,13 +24,19 @@ public class Snake extends Predator
     private static final int SQUIRREL_FOOD_VALUE = 4;
     // The food value of a single hedgehog.
     private static final int HEDGEHOG_FOOD_VALUE = 0;
-    // A shared random number generator to control breeding.
-    private static final Random rand = Randomizer.getRandom();
+    // The likelihood of a snake breeding.
+    private static final double BREEDING_PROBABILITY = 0.80;
+    // The maximum number of births.
+    private static final int MAX_LITTER_SIZE = 8;
+    // The age at which a snake can start to breed.
+    private static final int BREEDING_AGE = 3;
+    //The likelihood of dying by disease
     private static final int DISEASE_FATALITY=3;
+    
     // Individual characteristics (instance fields).
     // The snake's age.
     private int age;
-    // The snake's food level, which is increased by eating rabbits.
+    // The snake's food level, which is increased by eating herbivores.
     private int foodLevelBadger;
     private int foodLevelSquirrel;
     private int foodLevelHedgehog;
@@ -67,21 +69,6 @@ public class Snake extends Predator
         getGender();
         getDisease();
     }
-    /**
-     * Return breeding age of a snake
-     * @return breeding age of a snake.
-     */
-    protected int getBreedingAge(){
-        return BREEDING_AGE;
-    }
-    
-    /**
-     * Return breeding probability of a snake
-     * @return breeding probability of a snake.
-     */
-    protected double getBreedingProbability(){
-        return BREEDING_PROBABILITY;
-    }
     
     /**
      * Return age of a snake
@@ -97,14 +84,6 @@ public class Snake extends Predator
      */
     protected int getMaxAge(){
         return MAX_AGE;
-    }
-    
-    /**
-     * Return maximum litter size of a snake
-     * @return maximum litter size of a snake.
-     */
-    protected int getMaxLitterSize(){
-        return MAX_LITTER_SIZE;
     }
     
     /**
@@ -156,6 +135,90 @@ public class Snake extends Predator
     }
     
     /**
+     * Return breeding probability of a snake
+     * @return breeding probability of a snake.
+     */
+    protected double getBreedingProbability(){
+        return BREEDING_PROBABILITY;
+    }
+    
+    /**
+     * Return maximum litter size of a snake
+     * @return maximum litter size of a snake.
+     */
+    protected int getMaxLitterSize(){
+        return MAX_LITTER_SIZE;
+    }
+    
+    /**
+     * Return breeding age of a snake
+     * @return breeding age of a snake.
+     */
+    protected int getBreedingAge(){
+        return BREEDING_AGE;
+    }
+    
+    /**
+     * Find the partner's location under the conditions
+     * @return where the partner is found
+     */
+     public Location findPartner(){
+        Field field = getField();
+        List<Location> adjacent = field.adjacentLocations(getLocation());
+        Iterator<Location> it = adjacent.iterator();
+        while(it.hasNext()) {
+            Location where = it.next();
+            Object animal = field.getObjectAt(where);
+            if(animal instanceof Snake ){
+                Snake snake=(Snake) animal;
+                if(snake.isAlive() && getFemaleOrMale()!=snake.getFemaleOrMale()){
+                    // canBreed();
+                    return where;
+                }
+            }
+        }
+        return null;
+    }
+    
+    /**
+     * Check whether or not this snake is to give birth at this step.
+     * New births will be made into free adjacent locations.
+     * @param newSnakes A list to return newly born snakes.
+     */
+    public void giveBirth(List<Animal> newSnakes)
+    {
+        // New snakes are born into adjacent locations.
+        // Get a list of adjacent free locations.
+        Field field = getField();
+        List<Location> free = field.getFreeAdjacentLocations(getLocation());
+        int births = breed();
+        for(int b = 0; b < births && free.size() > 0; b++) {
+            Location loc = free.remove(0);
+            Snake young = new Snake(false, field, loc);
+            newSnakes.add(young);
+        }
+    }
+    
+    /**
+     * Spread disease for a snake
+     */
+    protected void spreadDisease(){
+        Field field = getField();
+        List<Location> adjacent = field.adjacentLocations(getLocation());
+        Iterator<Location> it = adjacent.iterator();
+        while(it.hasNext()) {
+            Location where = it.next();
+            Object animal = field.getObjectAt(where);
+            if(animal instanceof Snake){
+                Snake snake=(Snake) animal;
+                if (animal instanceof Snake && sickOrNot()==true){
+                    getDisease();
+                }
+            }
+        }
+    }
+    
+    /**
      * This is what the fox does most of the time: it hunts for
      * rabbits. In the process, it might breed, die of hunger,
      * or die of old age.
@@ -198,63 +261,4 @@ public class Snake extends Predator
         }
     }
     
-    /**
-     * Spread disease for a snake
-     */
-    protected void spreadDisease(){
-        Field field = getField();
-        List<Location> adjacent = field.adjacentLocations(getLocation());
-        Iterator<Location> it = adjacent.iterator();
-        while(it.hasNext()) {
-            Location where = it.next();
-            Object animal = field.getObjectAt(where);
-            if(animal instanceof Snake){
-                Snake snake=(Snake) animal;
-                if (animal instanceof Snake && sickOrNot()==true){
-                    getDisease();
-                }
-            }
-        }
-    }
-    
-    /**
-     * Check whether or not this snake is to give birth at this step.
-     * New births will be made into free adjacent locations.
-     * @param newSnakes A list to return newly born snakes.
-     */
-    public void giveBirth(List<Animal> newSnakes)
-    {
-        // New snakes are born into adjacent locations.
-        // Get a list of adjacent free locations.
-        Field field = getField();
-        List<Location> free = field.getFreeAdjacentLocations(getLocation());
-        int births = breed();
-        for(int b = 0; b < births && free.size() > 0; b++) {
-            Location loc = free.remove(0);
-            Snake young = new Snake(false, field, loc);
-            newSnakes.add(young);
-        }
-    }
-    
-    /**
-     * Find the partner's location under the conditions
-     * @return where the partner is found
-     */
-     public Location findPartner(){
-        Field field = getField();
-        List<Location> adjacent = field.adjacentLocations(getLocation());
-        Iterator<Location> it = adjacent.iterator();
-        while(it.hasNext()) {
-            Location where = it.next();
-            Object animal = field.getObjectAt(where);
-            if(animal instanceof Snake ){
-                Snake snake=(Snake) animal;
-                if(snake.isAlive() && getFemaleOrMale()!=snake.getFemaleOrMale()){
-                    // canBreed();
-                    return where;
-                }
-            }
-        }
-        return null;
-    }
 }

@@ -10,25 +10,28 @@ import java.util.Random;
  */
 public class Squirrel extends Herbivore
 {
-    // The age at which a squirrel can start to breed.
-    private static final int BREEDING_AGE = 5;
+    // A shared random number generator to control breeding.
+    private static final Random rand = Randomizer.getRandom();
+    
     // The age to which a squirrel can live.
     private static final int MAX_AGE = 40;
-    // The likelihood of a squirrel breeding.
-    private static final double BREEDING_PROBABILITY = 0.08;
-    // The likelihood of a squirrel dying from the disease 
-    private static final int DISEASE_FATALITY = 3;
-    // The maximum litter size of a squirrel.
-    private static final int MAX_LITTER_SIZE = 4;
     // The food value of a single flower. In effect, this is the
     // number of steps a squirrel can go before it has to eat again.
     private static final int FLOWER_FOOD_VALUE = 2;
-    // The squirrel's food level, which is increased by eating flowers.
-    private int foodLevelFlower;
-    // A shared random number generator to control breeding.
-    private static final Random rand = Randomizer.getRandom();
+    // The likelihood of a squirrel breeding.
+    private static final double BREEDING_PROBABILITY = 0.08;
+    // The maximum litter size of a squirrel.
+    private static final int MAX_LITTER_SIZE = 4;
+    // The age at which a squirrel can start to breed.
+    private static final int BREEDING_AGE = 5;
+    // The likelihood of a squirrel dying from the disease 
+    private static final int DISEASE_FATALITY = 3;
+    
     // The squirrel's age.
     private int age;
+    // The squirrel's food level, which is increased by eating flowers.
+    private int foodLevelFlower;
+    
     /**
      * Create a new squirrel. A squirrel may be created with age
      * zero (a new born) or with a random age.
@@ -43,6 +46,89 @@ public class Squirrel extends Herbivore
         age = 0;
         if(randomAge) {
             age = rand.nextInt(MAX_AGE);
+        }
+    }
+    
+    /**
+     * Return age of a squirrel
+     * @return age of a squirrel.
+     */
+    protected int getAge(){
+        return age;
+    }
+    
+    /**
+     * Return maximum age of a squirrel
+     * @return maximum age of a squirrel.
+     */
+    protected int getMaxAge(){
+        return MAX_AGE;
+    }
+    
+    /**
+     * Return food value of a flower to a squirrel
+     * @return food value of a flower to a squirrel.
+     */
+    protected int getFlowerFoodValue(){
+        return FLOWER_FOOD_VALUE;
+    }
+    
+    /**
+     * Return food level of a flower to a squirrel
+     * @return food level of a flower to a squirrel.
+     */
+    protected int getFlowerFoodLevel(){
+        return foodLevelFlower;
+    }
+    
+    /**
+     * Return breeding probability of a squirrel
+     * @return breeding probability of a squirrel.
+     */
+    protected double getBreedingProbability(){
+        return BREEDING_PROBABILITY;
+    }
+    
+    /**
+     * Return maximum litter size of a badger
+     * @return maximum litter size of a badger.
+     */
+    protected int getMaxLitterSize(){
+        return MAX_LITTER_SIZE;
+    }
+    
+    /**
+     * Return breeding age of a squirrel
+     * @return breeding age of a squirrel.
+     */
+    protected int getBreedingAge(){
+        return BREEDING_AGE;
+    }
+    
+    /**
+     * Return disease fatality of a squirrel
+     * @return disease fatality of a squirrel.
+     */
+    protected int getDiseaseFatality(){
+        return DISEASE_FATALITY;
+    }
+    
+    /**
+     * Check whether or not this rabbit is to give birth at this step.
+     * New births will be made into free adjacent locations.
+     * @param newSquirrels A list to return newly born squirrels.
+     */
+    public void giveBirth(List<Animal> newSquirrels)
+    {
+        // New squirrels are born into adjacent locations.
+        // Get a list of adjacent free locations.
+        Field field = getField();
+        List<Location> free = field.getFreeAdjacentLocations(getLocation());
+        int births = breed();
+        for(int b = 0; b < births && free.size() > 0; b++) {
+            Location loc = free.remove(0);
+            Squirrel young = new Squirrel(false, field, loc);
+            newSquirrels.add(young);
         }
     }
     
@@ -66,88 +152,5 @@ public class Squirrel extends Herbivore
                 setDead();
             }
         }
-    }
-    
-    /**
-     * Check whether or not this rabbit is to give birth at this step.
-     * New births will be made into free adjacent locations.
-     * @param newSquirrels A list to return newly born squirrels.
-     */
-    public void giveBirth(List<Animal> newSquirrels)
-    {
-        // New squirrels are born into adjacent locations.
-        // Get a list of adjacent free locations.
-        Field field = getField();
-        List<Location> free = field.getFreeAdjacentLocations(getLocation());
-        int births = breed();
-        for(int b = 0; b < births && free.size() > 0; b++) {
-            Location loc = free.remove(0);
-            Squirrel young = new Squirrel(false, field, loc);
-            newSquirrels.add(young);
-        }
-    }
-    
-    /**
-     * Return breeding age of a squirrel
-     * @return breeding age of a squirrel.
-     */
-    protected int getBreedingAge(){
-        return BREEDING_AGE;
-    }
-    
-    /**
-     * Return breeding probability of a squirrel
-     * @return breeding probability of a squirrel.
-     */
-    protected double getBreedingProbability(){
-        return BREEDING_PROBABILITY;
-    }
-    
-    /**
-     * Return age of a squirrel
-     * @return age of a squirrel.
-     */
-    protected int getAge(){
-        return age;
-    }
-    
-    /**
-     * Return maximum age of a squirrel
-     * @return maximum age of a squirrel.
-     */
-    protected int getMaxAge(){
-        return MAX_AGE;
-    }
-    
-    /**
-     * Return maximum litter size of a badger
-     * @return maximum litter size of a badger.
-     */
-    protected int getMaxLitterSize(){
-        return MAX_LITTER_SIZE;
-    }
-    
-    /**
-     * Return disease fatality of a squirrel
-     * @return disease fatality of a squirrel.
-     */
-    protected int getDiseaseFatality(){
-        return DISEASE_FATALITY;
-    }
-    
-    /**
-     * Return food value of a flower to a squirrel
-     * @return food value of a flower to a squirrel.
-     */
-    protected int getFlowerFoodValue(){
-        return FLOWER_FOOD_VALUE;
-    }
-    
-    /**
-     * Return food level of a flower to a squirrel
-     * @return food level of a flower to a squirrel.
-     */
-    protected int getFlowerFoodLevel(){
-        return foodLevelFlower;
     }
 }
