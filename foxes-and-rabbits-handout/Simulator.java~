@@ -29,7 +29,7 @@ public class Simulator
     // The probability that a wof will be created in any given grid position.
     private static final double WOLF_CREATION_PROBABILITY = 0.04; 
     //The probability that a plant will be created in any given grid position.
-    private static final double PLANT_CREATION_PROBABILITY= 0.08;
+    private static final double PLANT_CREATION_PROBABILITY= 0.01;
     // List of animals in the field.
     private List<Animal> animals;
     private List <Plant> plants;
@@ -103,7 +103,7 @@ public class Simulator
     {
         for(int step = 1; step <= numSteps && view.isViable(field); step++) {
             simulateOneStep();
-             delay(60);   // uncomment this to run more slowly
+            delay(120);   // uncomment this to run more slowly
         }
     }
     
@@ -205,7 +205,7 @@ public class Simulator
             for(int col = 0; col < plantField.getWidth(); col++) {
                 if(rand.nextDouble() <= PLANT_CREATION_PROBABILITY) {
                     Location location = new Location(row, col);
-                    Flower flower = new Flower(false, field, location);
+                    Flower flower = new Flower(false, false, field, location);
                     plants.add(flower);
             }
         }

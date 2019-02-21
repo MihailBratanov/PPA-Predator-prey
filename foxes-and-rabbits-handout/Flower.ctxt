@@ -1,10 +1,16 @@
 #BlueJ class context
 comment0.target=Flower
 comment0.text=\r\n\ Write\ a\ description\ of\ class\ Flower\ here.\r\n\r\n\ @author\ (your\ name)\r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
-comment1.params=isEaten\ field\ location
-comment1.target=Flower(boolean,\ Field,\ Location)
+comment1.params=isEaten\ randomPlantAge\ field\ location
+comment1.target=Flower(boolean,\ boolean,\ Field,\ Location)
 comment1.text=\r\n\ Constructor\ for\ objects\ of\ class\ Flower\r\n
-comment2.params=newFlowers\ nameOfWeather
-comment2.target=void\ reGrow(java.util.List,\ java.lang.String)
-comment2.text=\r\n\ Grow\ flowers\r\n
-numComments=3
+comment2.params=
+comment2.target=int\ getAge()
+comment2.text=\r\n\ Return\ age\ of\ a\ badger\r\n\ @return\ age\ of\ a\ badger.\r\n
+comment3.params=
+comment3.target=int\ getMaxAge()
+comment3.text=\r\n\ Return\ maximum\ age\ of\ a\ badger\r\n\ @return\ maximum\ age\ of\ a\ badger.\r\n
+comment4.params=newFlowers\ nameOfWeather
+comment4.target=void\ reGrow(java.util.List,\ java.lang.String)
+comment4.text=\r\n\ Grow\ flowers\r\n
+numComments=5

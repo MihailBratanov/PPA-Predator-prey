@@ -14,10 +14,10 @@ public class Hedgehog extends Herbivore
     private static final Random rand = Randomizer.getRandom();
     
     // The age to which a hedgehog can live.
-    private static final int MAX_AGE = 2;
+    private static final int MAX_AGE = 5;
     // The food value of a single flower. In effect, this is the
     // number of steps a hedgehog can go before it has to eat again.
-    private static final int FLOWER_FOOD_VALUE = 3;
+    private static final int FLOWER_FOOD_VALUE = 5;
     // The likelihood of a hedgehog breeding.
     private static final double BREEDING_PROBABILITY = 0.15;
     // The maximum litter size of a hedgehog.

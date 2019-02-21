@@ -10,6 +10,8 @@ public abstract class Plant
 {
     //properties of a plant
     private  Random rand = Randomizer.getRandom();
+    
+    private int plantAge;
     // whether or not the plan is eaten by herbivores
     private boolean eaten;
     //allocate a field
@@ -18,7 +20,6 @@ public abstract class Plant
     private Location plantLocation;
     //relation to a weather
     private Weather plantWeather;
-    
     
     /**
      * Constructor for objects of class Plant
@@ -31,7 +32,32 @@ public abstract class Plant
         rand = new Random();
         eaten = false; //not eaten 
     }
-
+    
+    /**
+     * Return the age of a herbivore
+     * @return the age of a herbivore.
+     */
+    abstract protected int getAge();
+    
+    /**
+     * Return the maximum age of a herbivore
+     * @return the maximum age of a herbivore.
+     */
+    abstract protected int getMaxAge();
+    
+    /**
+     * Increase the age.
+     * This could result in the rabbit's death.
+     */
+    protected void incrementAge()
+    {
+        int age = getAge();
+        age++;
+        if(age > getMaxAge()) {
+           setDead();
+        }
+    }
+    
     /**
      * Check whether the plant is eaten or not.
      * @return true if the plant is eaten.
