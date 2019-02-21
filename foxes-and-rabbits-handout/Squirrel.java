@@ -14,10 +14,10 @@ public class Squirrel extends Herbivore
     private static final Random rand = Randomizer.getRandom();
     
     // The age to which a squirrel can live.
-    private static final int MAX_AGE = 40;
+    private static final int MAX_AGE = 2;
     // The food value of a single flower. In effect, this is the
     // number of steps a squirrel can go before it has to eat again.
-    private static final int FLOWER_FOOD_VALUE = 2;
+    private static final int FLOWER_FOOD_VALUE = 3;
     // The likelihood of a squirrel breeding.
     private static final double BREEDING_PROBABILITY = 0.08;
     // The maximum litter size of a squirrel.

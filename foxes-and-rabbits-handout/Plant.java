@@ -17,7 +17,9 @@ public abstract class Plant
     //allocate plant location
     private Location plantLocation;
     //relation to a weather
-    private Weather weather=new Weather();
+    private Weather plantWeather;
+    
+    
     /**
      * Constructor for objects of class Plant
      */
@@ -25,6 +27,7 @@ public abstract class Plant
     {
         plantField = field;
         setLocation(plantLocation);
+        
         rand = new Random();
         eaten = false; //not eaten 
     }
@@ -33,19 +36,9 @@ public abstract class Plant
      * Check whether the plant is eaten or not.
      * @return true if the plant is eaten.
      */
-    protected boolean isEaten()
+    protected boolean returnEaten()
     {
         return eaten;
-    }
-    
-    /**
-     * 
-     */
-    protected boolean canGrow(){
-        if(weather.checkWeather().equals("rainy") && isEaten()==true){
-            return true;
-        }
-        return false;
     }
     
     /**
@@ -78,7 +71,7 @@ public abstract class Plant
     /**
      * Grow the plants after the herbivores eat the plants
      */
-    abstract void reGrow(List<Plant> newPlants);
+    abstract void reGrow(List<Plant> newPlants, String nameOfWeather);
     
     /**
      * Return the field where the plant is at

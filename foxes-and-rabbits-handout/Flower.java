@@ -9,7 +9,7 @@ public class Flower extends Plant
 {
     // instance variables - replace the example below with your own
     private boolean isEaten;
-
+    
     /**
      * Constructor for objects of class Flower
      */
@@ -17,23 +17,24 @@ public class Flower extends Plant
     {
         super(field,location);
         // initialise instance variables
-        isEaten=isEaten();
+        isEaten = returnEaten();
     }
     
     /**
      * Grow flowers
      */
-     public void reGrow(List<Plant> newFlowers){
+     public void reGrow(List<Plant> newFlowers, String nameOfWeather){
         Field field = getField();
         List<Location> free = field.getFreeAdjacentLocations(getLocation());
-         
-        
-       if( free.size() > 0 && canGrow()==true) {
-            Location loc = free.remove(0);
-            Flower flower = new Flower(false,field, loc);
-            newFlowers.add(flower);
+   
+        int FLOWER_BIRTH_RATE = 4;
+        if (nameOfWeather == "rainy"){
+            for(int b = 0; b < FLOWER_BIRTH_RATE && free.size() > 0; b++) {
+                Location loc = free.remove(0);
+                Flower flower = new Flower(false,field, loc);
+                newFlowers.add(flower);
+            }
         }
-       
     }
 }
     

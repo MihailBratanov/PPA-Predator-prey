@@ -69,7 +69,7 @@ public abstract class Herbivore extends Animal
             Object plant = field.getObjectAt(where);
             if(plant instanceof Flower) {
                 Flower flower = (Flower) plant;
-                if(!flower.isEaten()) { 
+                if(!flower.returnEaten()) { 
                     flower.setDead();
                     int b = getFlowerFoodValue();
                     return where;

@@ -256,8 +256,7 @@ public class Wolf extends Predator
              }
              // See if it was possible to move.
              if(newPartnerLocation != null) {
-            
-                giveBirth(newWolves);
+                 giveBirth(newWolves);
              }
              else {
                 // Overcrowding.

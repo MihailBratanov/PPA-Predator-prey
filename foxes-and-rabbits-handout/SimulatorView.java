@@ -30,7 +30,7 @@ public class SimulatorView extends JFrame
     private FieldView fieldView;
     private FieldView plantFieldView;
     private Time time;
-    private Weather weather;
+    
     // A map for storing colors for participants in the simulation
     private Map<Class, Color> colors;
     // A statistics object computing and storing simulation information
@@ -47,7 +47,7 @@ public class SimulatorView extends JFrame
         plantStats = new FieldStats();
         colors = new LinkedHashMap<>();
         time=new Time();
-        weather=new Weather();
+        
         setTitle("Predator/Pray Simulation");
         stepLabel = new JLabel(STEP_PREFIX, JLabel.CENTER);
         infoLabel = new JLabel("  ", JLabel.CENTER);
@@ -111,7 +111,7 @@ public class SimulatorView extends JFrame
      * @param step Which iteration step it is.
      * @param field The field whose status is to be displayed.
      */
-    public void showStatus(int step, Field field, Field plantField)
+    public void showStatus(int step, Field field, Field plantField, String weatherText)
     {
         if(!isVisible()) {
             setVisible(true);
@@ -119,7 +119,8 @@ public class SimulatorView extends JFrame
             
         stepLabel.setText(STEP_PREFIX + step);
         timeLabel.setText(HOUR_PREFIX + time.determineTime(step));
-        weatherLabel.setText(WEATHER_PREFIX + weather.determineWeather(step));
+        weatherLabel.setText(WEATHER_PREFIX + weatherText);
+        
         stats.reset();
         
         fieldView.preparePaint();

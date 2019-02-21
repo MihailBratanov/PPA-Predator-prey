@@ -22,8 +22,7 @@ public abstract class Animal
     private Location location;
     //initialize Time class
     private Time time = new Time();
-    //initialize Weather class
-    private Weather weather = new Weather();
+    
     /**
      * Create a new animal at location in field.
      * 
@@ -143,14 +142,5 @@ public abstract class Animal
     protected Time getTimeAnimal()
     {
         return time;
-    }
-    
-    /**
-     * Return weather value for the animal.
-     * @return weather.
-     */
-    protected Weather getWeatherAnimal()
-    {
-        return weather;
     }
 }

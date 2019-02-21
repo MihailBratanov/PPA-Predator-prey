@@ -36,12 +36,13 @@ public class Simulator
     // The current state of the field.
     private Field field;
     private Field plantField;
+    // The current state of the weather.
+    private Weather weather;
     // The current step of the simulation.
     private int step;
     // A graphical view of the simulation.
     private SimulatorView view;
-    private Time time=new Time();
-    private Weather weather=new Weather();
+    
     /**
      * Construct a simulation field with default size.
      */
@@ -68,6 +69,7 @@ public class Simulator
         plants =new ArrayList<>();
         field = new Field(depth, width);
         plantField=new Field(depth,width);
+        weather = new Weather();
 
         // Create a view of the state of each location in the field.
         view = new SimulatorView(depth, width);
@@ -101,7 +103,7 @@ public class Simulator
     {
         for(int step = 1; step <= numSteps && view.isViable(field); step++) {
             simulateOneStep();
-             delay(60);   // uncomment this to run more slowly
+             delay(120);   // uncomment this to run more slowly
         }
     }
     
@@ -113,6 +115,7 @@ public class Simulator
     public void simulateOneStep()
     {
         step++;
+        weather.changeWeather(step);
         // Provide space for newborn animals.
         List<Animal> newAnimals = new ArrayList<>();  
         List<Plant> newPlants=new ArrayList<>();
@@ -126,8 +129,8 @@ public class Simulator
         }
          for(Iterator<Plant> it = plants.iterator(); it.hasNext(); ) {
             Plant plant = it.next();
-            plant.reGrow(newPlants);
-            if(plant.isEaten()) {
+            plant.reGrow(newPlants, weather.getWeatherText());
+            if(plant.returnEaten()) {
                 it.remove();
             }
         }
@@ -135,9 +138,9 @@ public class Simulator
         // Add the newly born foxes and rabbits to the main lists.
         plants.addAll(newPlants);
         animals.addAll(newAnimals);
-        time.setTime(step);
-        weather.setWeather(step);
-        view.showStatus(step, field, plantField);
+        view.showStatus(step, field, plantField, weather.getWeatherText());
+        
+        //System.out.println(weather.getWeatherText());
     }
     /**
      * Gets the current step
@@ -156,7 +159,7 @@ public class Simulator
         populate();
         
         // Show the starting state in the view.
-        view.showStatus(step, field, plantField);
+        view.showStatus(step, field, plantField, weather.getWeatherText());
     }
     
     /**
@@ -221,4 +224,5 @@ public class Simulator
             // wake up
         }
     }
+    
 }

@@ -14,7 +14,7 @@ public class Badger extends Herbivore
     private static final Random rand = Randomizer.getRandom();
     
     // The age to which a badger can live.
-    private static final int MAX_AGE = 40;
+    private static final int MAX_AGE = 5;
     // The food value of a single flower. In effect, this is the
     // number of steps a badger can go before it has to eat again.
     private static final int FLOWER_FOOD_VALUE = 3;
