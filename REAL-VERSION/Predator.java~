@@ -8,7 +8,7 @@ import java.util.*;
  * Predators age, move, eat herbivores, and die.
  * 
  * @author David J. Barnes Michael Kölling Hana Mizukami and Mihail Bratanov
- * @version 2019.02.18 (3)
+ * @version 2017.02.18 (3)
  */
 public abstract class Predator extends Animal
 {

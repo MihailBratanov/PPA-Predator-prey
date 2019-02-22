@@ -1,13 +1,13 @@
 #BlueJ class context
 comment0.target=Time
-comment0.text=\n\ Time\ class\ distinguishes\ the\ time\ frame\ in\ the\ simulator.\n\n\ @author\ Hana\ Mizukami\ and\ Mihail\ Bratanov\n\ @version\ 2019.02.17\n
+comment0.text=\r\n\ Time\ class\ distinguishes\ the\ time\ frame\ in\ the\ simulator.\r\n\r\n\ @author\ Hana\ Mizukami\ and\ Mihail\ Bratanov\r\n\ @version\ 2019.02.17\r\n
 comment1.params=
 comment1.target=Time()
-comment1.text=\n\ Constructor\ for\ objects\ of\ class\ Time\n
+comment1.text=\r\n\ Constructor\ for\ objects\ of\ class\ Time\r\n
 comment2.params=stepTime
 comment2.target=void\ changeTime(int)
-comment2.text=\n\ Returns\ the\ time\ as\ either\ day\ or\ night\ depending\ on\ the\ count\n\n\ @param\ \ stepCount\ \ integer\ for\ the\ number\ of\ steps\n\ @return\ \ \ \ day\ or\ night\ as\ time\ reference\n
+comment2.text=\r\n\ Returns\ the\ time\ as\ either\ day\ or\ night\ depending\ on\ the\ count\r\n\r\n\ @param\ \ stepCount\ \ integer\ for\ the\ number\ of\ steps\r\n\ @return\ \ \ \ day\ or\ night\ as\ time\ reference\r\n
 comment3.params=
 comment3.target=java.lang.String\ returnTime()
-comment3.text=\n\ Returns\ the\ current\ time\n\n\ @return\ \ \ \ day\ or\ night\ as\ time\ reference\n
+comment3.text=\r\n\ Returns\ the\ current\ time\r\n\r\n\ @return\ \ \ \ day\ or\ night\ as\ time\ reference\r\n
 numComments=4

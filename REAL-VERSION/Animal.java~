@@ -131,4 +131,13 @@ public abstract class Animal
     {
         return location;
     }
+
+    /**
+     * Return the time.
+     * @return time.
+     */
+    // protected Time getTimeAnimal()
+    // {
+    //     return time;
+    //}
 }

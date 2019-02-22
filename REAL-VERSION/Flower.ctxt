@@ -1,16 +1,16 @@
 #BlueJ class context
 comment0.target=Flower
-comment0.text=\n\ Write\ a\ description\ of\ class\ Flower\ here.\n\n\ @author\ (your\ name)\n\ @version\ (a\ version\ number\ or\ a\ date)\n
+comment0.text=\r\n\ Write\ a\ description\ of\ class\ Flower\ here.\r\n\r\n\ @author\ Hana\ Mizukami\ and\ Mihail\ Bratanov\r\n\ @version\ 2019/02/22\r\n
 comment1.params=isEaten\ randomPlantAge\ field\ location
 comment1.target=Flower(boolean,\ boolean,\ Field,\ Location)
-comment1.text=\n\ Constructor\ for\ objects\ of\ class\ Flower\n
+comment1.text=\r\n\ Constructor\ for\ objects\ of\ class\ Flower\r\n\ \r\n\ @param\ isEaten\ whether\ it\ is\ eaten\r\n\ @param\ randomPlantAge\ whether\ given\ a\ random\ age\ or\ not\r\n\ @param\ field\ where\ the\ flower\ is\ located\ \r\n\ @param\ location\ where\ the\ flower\ is\ located\r\n
 comment2.params=
 comment2.target=int\ getAge()
-comment2.text=\n\ Return\ age\ of\ a\ badger\n\ @return\ age\ of\ a\ badger.\n
+comment2.text=\r\n\ Return\ age\ of\ a\ flower\r\n\ @return\ age\ of\ a\ flower.\r\n
 comment3.params=
 comment3.target=int\ getMaxAge()
-comment3.text=\n\ Return\ maximum\ age\ of\ a\ badger\n\ @return\ maximum\ age\ of\ a\ badger.\n
+comment3.text=\r\n\ Return\ maximum\ age\ of\ a\ flower\r\n\ @return\ maximum\ age\ of\ a\ flower.\r\n
 comment4.params=newFlowers\ nameOfWeather
 comment4.target=void\ reGrow(java.util.List,\ java.lang.String)
-comment4.text=\n\ Grow\ flowers\n
+comment4.text=\r\n\ Grow\ flowers\r\n\ \r\n\ @param\ newFlowers\ a\ list\ of\ new\ flowers\r\n\ @param\ nameOfWeather\ the\ weather\ type\r\n
 numComments=5

@@ -61,7 +61,7 @@ public class Flower extends Plant
         List<Location> free = field.getFreeAdjacentLocations(getLocation());
 
         incrementAge();
-        //check whether it is rainy or stormy
+
         if ((free.size() > 0 && nameOfWeather == "rainy")||(free.size() > 0 && nameOfWeather == "stormy")){
             setDead();
             

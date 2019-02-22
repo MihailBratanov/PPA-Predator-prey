@@ -119,7 +119,7 @@ public class Hedgehog extends Herbivore
      */
     public void giveBirth(List<Animal> newHedgehogs)
     {
-        // New hedhehogs are born into adjacent locations.
+        // New rabbits are born into adjacent locations.
         // Get a list of adjacent free locations.
         Field field = getField();
         List<Location> free = field.getFreeAdjacentLocations(getLocation());

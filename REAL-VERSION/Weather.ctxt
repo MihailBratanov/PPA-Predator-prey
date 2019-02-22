@@ -1,13 +1,13 @@
 #BlueJ class context
 comment0.target=Weather
-comment0.text=\n\ Weather\ class\ stores\ the\ possible\ weathers\ for\ each\ time\ step.\n\n\ @Hana\ Mizukami\ (Hana)\n\ @version1\ 14/02/2019\ \n
+comment0.text=\r\n\ Weather\ class\ stores\ the\ possible\ weathers\ for\ each\ time\ step.\r\n\r\n\ @author\ Hana\ Mizukami\ and\ Mihail\ Bratanov\r\n\ @version1\ 22/02/2019\ (3)\r\n
 comment1.params=
 comment1.target=Weather()
-comment1.text=\n\ Constructor\ for\ objects\ of\ class\ Weather\n
+comment1.text=\r\n\ Constructor\ for\ objects\ of\ class\ Weather\r\n
 comment2.params=steps
 comment2.target=void\ changeWeather(int)
-comment2.text=\n\ An\ example\ of\ a\ method\ -\ replace\ this\ comment\ with\ your\ own\n\n\ @param\ \ timeToChange\ \ when\ the\ weather\ changes\n\ @param\ \ weather\ String\ values\ for\ the\ weather\n\ @return\ \ \ \ the\ weather\ description\n
+comment2.text=\r\n\ Change\ the\ weather\ each\ step\ interval\r\n\r\n\ @param\ \ steps\ int\ value\ for\ the\ number\ of\ steps\ run\r\n
 comment3.params=
 comment3.target=java.lang.String\ getWeatherText()
-comment3.text=\n\ Returns\ the\ current\ weather\n\n\ @return\ \ \ \ current\ weather\n
+comment3.text=\r\n\ Returns\ the\ current\ weather\r\n\r\n\ @return\ \ \ \ current\ weather\ text\r\n
 numComments=4

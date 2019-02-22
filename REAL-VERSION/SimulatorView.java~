@@ -109,7 +109,7 @@ public class SimulatorView extends JFrame
      * @param step Which iteration step it is.
      * @param field The field whose status is to be displayed
      * @param weatherText The weather text that displays the current weather
-     * @param timeText The text that indicates day or night
+     * 
      */
     public void showStatus(int step, Field field, Field plantField, String weatherText, String timeText)
     {

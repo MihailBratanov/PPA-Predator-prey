@@ -30,7 +30,7 @@ public class Wolf extends Predator
     private static final int MAX_LITTER_SIZE = 15;
     // The age at which a wolve can start to breed.
     private static final int BREEDING_AGE = 2;
-    // The amount of steps wolves can make before they die from the infection.
+    // The amount of steps animals can make before they die from the infection.
     private static final int DISEASE_FATALITY = 3;
     
     // Individual characteristics (instance fields).
